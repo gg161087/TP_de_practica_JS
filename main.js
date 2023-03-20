@@ -4,6 +4,14 @@ const btnReset = document.getElementById('btn-reset');
 const divEnunciado = document.getElementById('enunciado');
 
 const arrayVacio = [];
+let promedios = {}
+let num;
+let num1;
+let num2;
+let num3;
+let num4;
+let resultado;
+let booleano = true;
 
 const createParrafo = (text) => `<p>${text}</p>`;
 const createLabel = (text, para, id) => `<label for="${para}" id="${id}">${text}</label>`;
@@ -46,11 +54,17 @@ const calcular = (operacion, a, b) => {
     }
 }
 
+const promedioDeTres = (a, b, c) => (a + b +c) / 3
+
 const contarHasta = (numero) => {
     for (let i = 1; i <= numero; i++) {        
         console.log(i);
     }
 }
+
+const obtenerNombreCompleto = (nombre, apellido) => `${nombre} ${apellido}`
+
+const convertirHorasEnSegundos = horas => horas * 60 * 60;
 
 const eUno = () => {
     for (let i = 1; i <= 10; i++) {                
@@ -122,9 +136,7 @@ const eNueve = () => {
     const label = document.getElementById('label-9');
     const button = document.getElementById('btn-9');
     const input = document.getElementById('input-9');
-
-    let booleano = true;
-    let num1;
+    
     button.addEventListener('click', () => { 
                  
         if (isNaN(input.value) || input.value == '') {
@@ -132,8 +144,8 @@ const eNueve = () => {
             input.value = '';
         } else {
             if (!booleano){
-                let num2 = Number(input.value);                
-                let resultado = sumar(num1, num2);            
+                num2 = Number(input.value);                
+                resultado = sumar(num1, num2);            
                 input.style.display = 'none';
                 button.style.display = 'none';
                 label.style.display = 'none';
@@ -155,10 +167,7 @@ const eDiez = () => {
     
     let button = document.getElementById('btn-10');
     let input = document.getElementById('input-10');
-    let label = document.getElementById('label-10');
-
-    let booleano = true;   
-    let num1; 
+    let label = document.getElementById('label-10');    
     
     button.addEventListener('click', () => {                
         if (isNaN(input.value) || input.value == '') {
@@ -197,8 +206,6 @@ const eOnce = () => {
     operador.innerHTML += createOption('-', '- Restar');
     operador.innerHTML += createOption('*', '* Multiplicar');
     operador.innerHTML += createOption('/', '/ Dividir');
-
-    let booleano = true; 
     
     button.addEventListener('click', () => {        
         if (isNaN(input.value) || input.value == '') {
@@ -253,13 +260,13 @@ const eTrece = () => {
 
     button.addEventListener('click', () => {
         while (prompt('¿Deseas usar la calculadora?') === 'si') {
-            let num1 = Number(prompt('Ingrese un número: '));
+            num1 = Number(prompt('Ingrese un número: '));
             console.log(typeof(num1));
             while (isNaN(num1)) {
                 alert('Debes ingresar Números');
                 num1 = Number(prompt('Ingrese un número: '));
             }        
-            let num2 = Number(prompt('Ingrese otro número'));
+            num2 = Number(prompt('Ingrese otro número'));
             while (isNaN(num2)){
                 alert('Debes ingresar Números');
                 num2 = Number(prompt('Ingrese otro número'));
@@ -289,7 +296,6 @@ const eQuince = () => {
     let contadorPares = 0;
     let contadorImpares = 0;
     let contador = 1;
-    let num = 0;
 
     app.innerHTML += createLabel(`Ingrese 5 números`, 'input-15', 'label-15');
     app.innerHTML += createInput('text', 'input-15');
@@ -328,7 +334,6 @@ const eDieciseis = () => {
     let contador = 1;
     let AlturaTotal = 0;
     let promedio = 0;
-    let num = 0;
 
     app.innerHTML += createLabel(`Ingrese la altura de 5 personas: `, 'input-16', 'label-16');
     app.innerHTML += createInput('text', 'input-16');
@@ -371,7 +376,6 @@ const promediosEstudiantes = (turno, cantidad, contenedor) => {
         let contador = 1;
         let total = 0;
         let promedio = 0;
-        let num = 0;
         let arreglo = [];
 
         contenedor.innerHTML += createLabel(`Ingrese la edad de ${cantidad} estudiantes, del turno ${turno}: `, `input-${turno}`, `label-${turno}`);
@@ -413,8 +417,6 @@ const promediosEstudiantes = (turno, cantidad, contenedor) => {
     });
 }
 
-let promedios = {}
-
 const eDiecisiete = () => {    
     let turnoManana = document.createElement('div');
     turnoManana.setAttribute('class', 'prom-estudiantes');
@@ -427,9 +429,9 @@ const eDiecisiete = () => {
     app.appendChild(turnoNoche); 
 
     const promesas = [
-        promediosEstudiantes('Mañana', 3, turnoManana),
-        promediosEstudiantes('Tarde', 3, turnoTarde),
-        promediosEstudiantes('Noche', 3, turnoNoche)
+        promediosEstudiantes('Mañana', 5, turnoManana),
+        promediosEstudiantes('Tarde', 6, turnoTarde),
+        promediosEstudiantes('Noche', 11, turnoNoche)
     ];
     Promise.all(promesas).then(() => {
         let maxPromedio = 0;
@@ -454,7 +456,6 @@ const eDieciocho = () => {
     let arrayNegativos = [];
     let arrayPositivos = [];
     let arrayMultiploQuince = [];
-    let num = 0;
     let totalPares = 0;
 
     app.innerHTML += createLabel(`Ingrese ${valores} valores enteros: `, 'input-19', 'label-19');
@@ -581,7 +582,251 @@ const eDiecinueve = () => {
 }
 
 const eVeinte = () => {
+    app.innerHTML += createLabel('Ingrese el primer número: ', 'input-20', 'label-20');
+    app.innerHTML += createInput('text', 'input-20');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-20');
+    
+    let button = document.getElementById('btn-20');
+    let input = document.getElementById('input-20');
+    let label = document.getElementById('label-20');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
 
+    resultado = '';
+
+    button.addEventListener('click', () => {
+        if (isNaN(input.value) || input.value == '') {
+            alert('solo números');
+            input.value = '';           
+        } else {
+            if (booleano) {
+                num1 = Number(input.value);
+                input.value = '';
+                booleano = false
+                label.innerText = 'Ingrese el segundo número: ';
+            } else {
+                if (input.value > num1) {
+                    num2 = Number(input.value);
+                    input.disabled = booleano;
+                    button.disabled = booleano;
+                    label.style.display = 'none';
+                    input.style.display = 'none';
+                    button.style.display = 'none';
+                    parrafo.innerText = `Primer número: ${num1}. Segundo Número: ${num2}`
+                    for (let index = num1; index <= num2; index++) {
+                        resultado += `${String(index)} `
+                        
+                    }
+                    let pe = document.createElement('p');
+                    pe.innerText = resultado;
+                    app.appendChild(pe);                    
+
+                }else {
+                    alert('El segundo número tiene que ser mas grande que el primero');
+                }                                   
+            }           
+        }
+    })
+}
+
+const eVeintiuno = () => {
+    let valores = 3;
+
+    app.innerHTML += createLabel(`Ingrese el número N°${valores}: `, 'input-21', 'label-21');
+    app.innerHTML += createInput('text', 'input-21');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-21');
+    
+    let button = document.getElementById('btn-21');
+    let input = document.getElementById('input-21');
+    let label = document.getElementById('label-21');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {
+        if (isNaN(input.value) || input.value == '') {
+            alert('solo números');
+            input.value = '';           
+        } else {
+            if (valores == 3) {
+                num = Number(input.value);
+                input.value = '';
+                valores--
+                label.innerText = `Ingrese el número N°${valores}: `;
+            } 
+            else if (valores == 2) {
+                num2 = Number(input.value);
+                input.value = '';
+                valores--;
+                label.innerText = `Ingrese el número N°${valores}: `;
+            }else if(valores == 1) {
+                num1 = Number(input.value);
+                valores--;
+                resultado = promedioDeTres(num, num1, num2);
+                input.disabled = booleano;
+                button.disabled = booleano;
+                label.style.display = 'none';
+                input.style.display = 'none';
+                button.style.display = 'none';
+                parrafo.innerText = `Ingresados: ${num}, ${num2}, ${num1}. | Promedio: ${resultado}`;                                  
+            }           
+        }
+    })
+}
+
+const eVeintidos = () => {
+    let valores = 5;
+
+    app.innerHTML += createLabel(`Ingrese el número N°${valores}: `, 'input-22', 'label-22');
+    app.innerHTML += createInput('text', 'input-22');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-22');
+    
+    let button = document.getElementById('btn-22');
+    let input = document.getElementById('input-22');
+    let label = document.getElementById('label-22');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {
+        if (isNaN(input.value) || input.value == '') {
+            alert('solo números');
+            input.value = '';           
+        } else {
+            switch (valores) {
+                case 5:
+                    num = Number(input.value);
+                    input.value = '';
+                    valores--
+                    label.innerText = `Ingrese el número N°${valores}: `;
+                    break;
+                case 4:
+                    num4 = Number(input.value);
+                    input.value = '';
+                    valores--
+                    label.innerText = `Ingrese el número N°${valores}: `;
+                    break;
+                case 3:
+                    num3 = Number(input.value);
+                    input.value = '';
+                    valores--
+                    label.innerText = `Ingrese el número N°${valores}: `;
+                    break;
+                case 2:
+                    num2 = Number(input.value);
+                    input.value = '';
+                    valores--
+                    label.innerText = `Ingrese el número N°${valores}: `;
+                    break;
+                case 1:
+                    num1 = Number(input.value);
+                    input.value = '';
+                    valores--;
+                    label.innerText = `Ingrese el número N°${valores}: `;
+                    break;                 
+                default:
+                    break;
+            }
+            if (valores == 0) {
+                resultado = num + num1 + num2 + num3 + num4;
+                input.disabled = booleano;
+                button.disabled = booleano;
+                label.style.display = 'none';
+                input.style.display = 'none';
+                button.style.display = 'none';
+                parrafo.innerText = `Ingresados: ${num} + ${num4} + ${num3} + ${num2} + ${num1} = ${resultado}`; 
+            }         
+        }
+    })
+}
+
+const eVeintitres = () => {
+    app.innerHTML += createLabel('Ingrese una palabra: ', 'input-23', 'label-23');
+    app.innerHTML += createInput('text', 'input-23');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-23');
+    
+    let button = document.getElementById('btn-23');
+    let input = document.getElementById('input-23');
+    let label = document.getElementById('label-23');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {        
+        if (input.value == '') {
+            alert('Ingrese una palabra');
+        } else {
+            input.disabled = booleano;
+            button.disabled = booleano;
+            label.style.dislay = 'none';            
+            input.style.display = 'none';
+            button.style.display = 'none';
+            resultado = '!';
+            resultado += input.value;
+            resultado += '¡'
+            parrafo.innerText = resultado;            
+        }
+        
+    })
+}
+const eVeinticuatro = () => {
+    app.innerHTML += createLabel('Ingrese un nombre: ', 'input-24', 'label-24');
+    app.innerHTML += createInput('text', 'input-24');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-24');
+    
+    let button = document.getElementById('btn-24');
+    let input = document.getElementById('input-24');
+    let label = document.getElementById('label-24');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    let nombre;
+    let apellido;
+    button.addEventListener('click', () => {        
+        if (input.value == '') {
+            alert('No puede estar vacio');
+        } else {
+            if (booleano) {
+                nombre = input.value;
+                label.innerText = 'Ingrese un apellido: ';
+                input.value = '';
+                booleano = false;    
+            } else if (!booleano) {
+                apellido = input.value;                
+                input.disabled = !booleano;
+                button.disabled = !booleano;
+                label.style.display = 'none';            
+                input.style.display = 'none';
+                button.style.display = 'none';
+                resultado = obtenerNombreCompleto(nombre, apellido);
+                parrafo.innerText = resultado;
+            }                        
+        }        
+    })
+}
+
+const eVeinticinco = () => {
+    app.innerHTML += createLabel('Ingrese cantidad de horas a convertir a segundo: ', 'input-25', 'label-25');
+    app.innerHTML += createInput('text', 'input-25');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-25');
+    
+    let button = document.getElementById('btn-25');
+    let input = document.getElementById('input-25');
+    let label = document.getElementById('label-25');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {        
+        if (isNaN(input.value) || input.value == '') {
+            alert('solo números');
+            input.value = '';           
+        } else {
+            num = input.value;
+            input.disabled = booleano;
+            button.disabled = booleano;
+            label.style.display = 'none';            
+            input.style.display = 'none';
+            button.style.display = 'none';
+            resultado = convertirHorasEnSegundos(num);
+            parrafo.innerText = `${num}hs son ${resultado} segundos.`;                       
+        }        
+    })
 }
 
 const selector = () => {
@@ -654,27 +899,46 @@ const selector = () => {
             break;
         case 17:
             eDiecisiete();
-            enunciado = `Se cuenta con la siguiente información:<br>Las edades de 5 estudiantes del turno mañana.<br>Las edades de 6 estudiantes del turno tarde.<br>Las edades de 11 estudiantes del turno noche.<br>Las edades de cada estudiante deben ingresarse por teclado.<br>a) Obtener el promedio de las edades de cada turno (tres promedios).<br>b) Imprimir dichos promedios (promedio de cada turno).<br>c) Mostrar por pantalla un mensaje que indique cual de los tres turnos tiene un promedio de edades mayor.`; 
+            enunciado = 'Se cuenta con la siguiente información:<br>Las edades de 5 estudiantes del turno mañana.<br>Las edades de 6 estudiantes del turno tarde.<br>Las edades de 11 estudiantes del turno noche.<br>Las edades de cada estudiante deben ingresarse por teclado.<br>a) Obtener el promedio de las edades de cada turno (tres promedios).<br>b) Imprimir dichos promedios (promedio de cada turno).<br>c) Mostrar por pantalla un mensaje que indique cual de los tres turnos tiene un promedio de edades mayor.'; 
             break;
         case 18:
             eDieciocho();
-            enunciado = `Se realiza la carga de 10 valores enteros por teclado. Se desea conocer:<br>
-            a) La cantidad de valores negativos ingresados.<br>b) La cantidad de valores positivos ingresados.<br>c) La cantidad de múltiplos de 15.<br>d) El valor acumulado de los números ingresados que son pares.`; 
+            enunciado = 'Se realiza la carga de 10 valores enteros por teclado. Se desea conocer:<br>a) La cantidad de valores negativos ingresados.<br>b) La cantidad de valores positivos ingresados.<br>c) La cantidad de múltiplos de 15.<br>d) El valor acumulado de los números ingresados que son pares.'; 
             break;
         case 19:
             eDiecinueve();
-            enunciado = `hacer un programa que lea los lados de 4 triángulos, e informar: <br>a) De cada uno de ellos, qué tipo de triángulo es: equilátero , isósceles o escaleno <br>b) Cantidad de triángulos de cada tipo. <br>c) Tipo de triángulo del que hay menor cantidad.`; 
+            enunciado = 'hacer un programa que lea los lados de 4 triángulos, e informar: <br>a) De cada uno de ellos, qué tipo de triángulo es: equilátero , isósceles o escaleno <br>b) Cantidad de triángulos de cada tipo. <br>c) Tipo de triángulo del que hay menor cantidad.'; 
             break;
         case 20:
             eVeinte();
-            enunciado = `hacer una función que solicite la carga de dos enteros (primero el menor y luego el mayor) y nos muestre desde el menor hasta el mayor de uno en uno. Por ejemplo si ingresamos los valores 4 y 10 luego se debe mostrar por pantalla: <br> 4 5 6 7 8 9 10`; 
-            break;                                                                    
+            enunciado = 'hacer una función que solicite la carga de dos enteros (primero el menor y luego el mayor) y nos muestre desde el menor hasta el mayor de uno en uno. Por ejemplo si ingresamos los valores 4 y 10 luego se debe mostrar por pantalla: <br> 4 5 6 7 8 9 10'; 
+            break;
+        case 21:
+            eVeintiuno();
+            enunciado = 'Hacer una función que reciba tres enteros y retorne el promedio.'; 
+            break;
+        case 22:
+            eVeintidos();
+            enunciado = 'Confeccionar una función que solicite la carga de 5 valores por teclado y retorne su suma.'; 
+            break;
+        case 23:
+            eVeintitres();
+            enunciado = 'hacer una funcion que envie una palabra cualquiera y me la devuelva con signo de exclamación al inicio y al final !¡'; 
+            break;
+        case 24:
+            eVeinticuatro();
+            enunciado = 'Definí una función obtenerNombreCompleto que reciba como argumento un nombre y un apellido y devuelva un string con la unión de ambos valores'; 
+            break;
+        case 25:
+            eVeinticinco();
+            enunciado = 'Definí una función convertirHorasEnSegundos que reciba como argumento un número de horas y devuelva la conversión a segundos de dicha cantidad de horas'; 
+            break;                                                                       
         default:
             enunciado = 'No existe el ejercicio con ese número:';
             break;
     }
     btnEjecutar.disabled = true;
-    divEnunciado.innerHTML += `<h4>Consigna: </h4>`;
+    divEnunciado.innerHTML += '<h4>Consigna: </h4>';
     divEnunciado.innerHTML += createParrafo(enunciado);    
     btnReset.disabled = false;       
 }
