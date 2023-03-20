@@ -280,9 +280,7 @@ const eCatorce = () => {
     while (contador < 25) {
         serie += 11;
         contador++;
-
-        app.innerHTML += createParrafo(serie)
-        
+        app.innerHTML += createParrafo(serie);      
         console.log(serie);
     }    
 }
@@ -442,7 +440,7 @@ const eDiecisiete = () => {
                 turnoMaxPromedio = turno;
             }
         }
-        app.innerHTML += createParrafo(`El turno con el promedio más alto es ${turnoMaxPromedio} con un promedio de ${maxPromedio}`)
+        app.innerHTML += createParrafo(`El turno con el promedio más alto es ${turnoMaxPromedio} con un promedio de ${maxPromedio}`);
         console.log(`El turno con el promedio más alto es ${turnoMaxPromedio} con un promedio de ${maxPromedio}`);
     })
     .catch((error) => {
@@ -490,8 +488,7 @@ const eDieciocho = () => {
             }             
             if ((num % 2) == 0) {
                 totalPares += num;
-            }
-                    
+            }                    
            
             parrafo.innerText = `Ingresados: ${arrayEnteros} | Negativos: ${arrayNegativos} | Positivos: ${arrayPositivos} | Multiplos de quince: ${arrayMultiploQuince} | Total acumulado de pares: ${totalPares} `;
                 
@@ -502,16 +499,15 @@ const eDieciocho = () => {
                 input.style.display = 'none';
                 button.style.display = 'none';
 
-            }
-            
-            input.value = '';
-                     
+            }            
+            input.value = '';                     
         }
     })
 }
 
 const eDiecinueve = () => {
     let triangulos = 4;
+    let ladosTriangulos = [];    
     let cantidadquilatero = 0;
     let cantidadIsosceles = 0;
     let cantidadEscaleno = 0;
@@ -520,7 +516,7 @@ const eDiecinueve = () => {
     let b = 0;
     let c = 0;
 
-    app.innerHTML += createLabel(`Triangulo N°${triangulos}. Ingrese el valor de sus lados ${3 -lados} restantes: `, 'input-19', 'label-19');
+    app.innerHTML += createLabel(`Triangulo N°${triangulos}. Ingrese el valor de sus lados ${3 - lados} restantes: `, 'input-19', 'label-19');
     app.innerHTML += createInput('text', 'input-19');
     app.innerHTML += createButtonSuccess('Ingresar', 'btn-19');
 
@@ -534,33 +530,58 @@ const eDiecinueve = () => {
         if (isNaN(input.value) || input.value == '') {
             alert('Los angulos tienen que ser solo números');
             input.value = '';           
-        } else {
-            lados++;
+        } else {            
             if (a == 0) {
                 a = Number(input.value);
+                lados++;
                 input.value = '';
-                console.log(a);    
+                console.log(`lado a: ${a}`);
+                label.innerText = `Triangulo N°${triangulos}. Ingrese el valor de sus lados ${3 - lados} restantes: `    
             } else if (b == 0) {
-                b = Number(input.value);
+                b = Number(input.value);                
+                lados++;
                 input.value = '';
-                console.log(b);
+                console.log(`lado b: ${b}`);
+                label.innerText = `Triangulo N°${triangulos}. Ingrese el valor de sus lados ${3 - lados} restantes: ` 
             } else {
-                c = Number(input.value);
-                console.log(c);
-                input.value = '';
-                triangulos--;
+                c = Number(input.value);                                
+                console.log(`lado c: ${c}`);
+                input.value = '';                
                 lados = 0;
+
+                if ((a + b + c) == 180) {
+                    ladosTriangulos.push(a)
+                    ladosTriangulos.push(b)
+                    ladosTriangulos.push(c)
+                    if(a == b && a == c) cantidadquilatero++
+                    if((a == b && a != c) || ( c == b && c!=a)) cantidadIsosceles++
+                    if(a != b && a != c && c != b) cantidadEscaleno++
+                    triangulos--;   
+                } else {
+                    alert('Angulos proporcionados incorrectos');
+                }
+                
+                a=0
+                b=0
+                c=0
+                label.innerText = `Triangulo N°${triangulos}. Ingrese el valor de sus lados ${3 - lados} restantes: ` 
+            
                 if (triangulos == 0) {                 
                     input.disabled= true;
                     button.disabled = true;
                     label.style.display = 'none';
                     input.style.display = 'none';
                     button.style.display = 'none';
+                    parrafo.innerText = `Lados Ingresos: ${ladosTriangulos}.| Equilateros: ${cantidadquilatero}.| Isosceles: ${cantidadIsosceles}.| Escaleno: ${cantidadEscaleno}`;                   
                 }                
                 
             }                          
         }
     })
+}
+
+const eVeinte = () => {
+
 }
 
 const selector = () => {
@@ -643,7 +664,11 @@ const selector = () => {
         case 19:
             eDiecinueve();
             enunciado = `hacer un programa que lea los lados de 4 triángulos, e informar: <br>a) De cada uno de ellos, qué tipo de triángulo es: equilátero , isósceles o escaleno <br>b) Cantidad de triángulos de cada tipo. <br>c) Tipo de triángulo del que hay menor cantidad.`; 
-            break;                                                                
+            break;
+        case 20:
+            eVeinte();
+            enunciado = `hacer una función que solicite la carga de dos enteros (primero el menor y luego el mayor) y nos muestre desde el menor hasta el mayor de uno en uno. Por ejemplo si ingresamos los valores 4 y 10 luego se debe mostrar por pantalla: <br> 4 5 6 7 8 9 10`; 
+            break;                                                                    
         default:
             enunciado = 'No existe el ejercicio con ese número:';
             break;
