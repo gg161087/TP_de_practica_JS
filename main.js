@@ -3,6 +3,7 @@ const btnEjecutar = document.getElementById('btn-ejecutar');
 const btnReset = document.getElementById('btn-reset');
 const divEnunciado = document.getElementById('enunciado');
 
+const vocales = ['a', 'e', 'i', 'o', 'u'];
 const arrayVacio = [];
 let promedios = {}
 let num;
@@ -65,6 +66,25 @@ const contarHasta = (numero) => {
 const obtenerNombreCompleto = (nombre, apellido) => `${nombre} ${apellido}`
 
 const convertirHorasEnSegundos = horas => horas * 60 * 60;
+
+const generarEmail = (nombre, dominio) => `${nombre}@${dominio}`;
+
+const puedeVerPelicula = (edad, booleano) => {
+    if (edad >= 15 || booleano == true) {
+        return true;
+    }else {
+        return false;
+    }    
+}
+
+const esVocal = (vocal) => {
+    for (const iterator of vocales) {
+        if (iterator == vocal) {
+            return true            
+        }
+    }
+    return false;
+}
 
 const eUno = () => {
     for (let i = 1; i <= 10; i++) {                
@@ -828,6 +848,160 @@ const eVeinticinco = () => {
         }        
     })
 }
+const eVeintiseis = () => {    
+    app.innerHTML += createLabel('Ingrese nombre de usuario: ', 'input-26', 'label-26');
+    app.innerHTML += createInput('text', 'input-26');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-26');
+    
+    let button = document.getElementById('btn-26');
+    let input = document.getElementById('input-26');
+    let label = document.getElementById('label-26');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {
+        if (input.value == '') {
+            alert('No puede estar vacio');
+        } else {
+            if (booleano) {
+                nombre = input.value;
+                label.innerText = 'Ingrese dominio: ';
+                input.value = '';
+                booleano = false;    
+            } else if (!booleano) {
+                let dominio = input.value;                
+                input.disabled = !booleano;
+                button.disabled = !booleano;
+                label.style.display = 'none';            
+                input.style.display = 'none';
+                button.style.display = 'none';
+                resultado = generarEmail(nombre, dominio);
+                parrafo.innerText = resultado;
+            }                        
+        } 
+    })
+}
+
+const eVeintisiete = () => {
+    app.innerHTML += createLabel('Ingresá una cantidad de grados Celsius: ', 'input-27', 'label-27');
+    app.innerHTML += createInput('text', 'input-27');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-27');
+    
+    let button = document.getElementById('btn-27');
+    let input = document.getElementById('input-27');
+    let label = document.getElementById('label-27');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {        
+        if (isNaN(input.value) || input.value == '') {
+            alert('solo números');
+            input.value = '';           
+        } else {
+            num = input.value;
+            input.disabled = booleano;
+            button.disabled = booleano;
+            label.style.display = 'none';            
+            input.style.display = 'none';
+            button.style.display = 'none';
+            resultado = (num * 1.8) + 32
+            parrafo.innerText = `a conversión de ${num} grados Celsius a Fahrenheit es:
+            ${resultado}`;                       
+        }        
+    })
+}
+
+const eVeintiocho = () => {
+    app.innerHTML += createLabel('Ingresá la distancia del recorrido: ', 'input-27', 'label-27');
+    app.innerHTML += createInput('text', 'input-27');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-27');
+    
+    let button = document.getElementById('btn-27');
+    let input = document.getElementById('input-27');
+    let label = document.getElementById('label-27');
+    let parrafo = document.createElement('p');
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {        
+        if (isNaN(input.value) || input.value == '') {
+            alert('solo números');
+            input.value = '';           
+        } else {
+            num = input.value;
+            input.disabled = booleano;
+            button.disabled = booleano;
+            label.style.display = 'none';            
+            input.style.display = 'none';
+            button.style.display = 'none';
+            let resultadoEnBicicleta = num / 10;
+            let resultadoAPie = num / 5;
+            let resultadoEnAuto = num / 50;
+            parrafo.innerText = `Para la distancia ${num} km en bicicleta el tiempo de viaje es ${resultadoEnBicicleta}
+            hora/s, a pie ${resultadoAPie} hora/s y en auto ${resultadoEnAuto} hora/s`;                   
+        }        
+    })
+}
+
+const eVeintinueve = () => {
+    app.innerHTML += createLabel('Ingresá la edad: ', 'input-29', 'label-29');
+    app.innerHTML += createInput('text', 'input-29');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-29');
+    app.innerHTML += createSelect('autorizaciones', 'autorizador'); 
+    
+    let button = document.getElementById('btn-29');
+    let input = document.getElementById('input-29');
+    let label = document.getElementById('label-29');
+    let parrafo = document.createElement('p');
+    let autorizaciones = document.getElementById('autorizador');
+
+    autorizaciones.innerHTML += createOption(true, 'Autorizado');
+    autorizaciones.innerHTML += createOption(false, 'No Autorizado');
+    
+    app.appendChild(parrafo);
+    let autorizado = booleano;
+    button.addEventListener('click', () => {        
+        if (isNaN(input.value) || input.value == '') {
+            alert('solo números');
+            input.value = '';                      
+        } else {
+            num = input.value;
+            if(autorizaciones.value == 'false') autorizado = !booleano;            
+            input.disabled = booleano;
+            button.disabled = booleano;
+            autorizaciones.disabled = booleano;
+            label.style.display = 'none';            
+            input.style.display = 'none';
+            button.style.display = 'none';
+            resultado = puedeVerPelicula(num, autorizado);
+            console.log(resultado);
+            parrafo.innerText = `${resultado ? 'Puede verla' : 'no puede verla'}`;
+        }        
+    })
+}
+
+const eTreinta = () => {
+    app.innerHTML += createLabel('Ingresá una letra: ', 'input-30', 'label-30');
+    app.innerHTML += createInput('text', 'input-30');
+    app.innerHTML += createButtonSuccess('Ingresar', 'btn-30');    
+    
+    let button = document.getElementById('btn-30');
+    let input = document.getElementById('input-30');
+    let label = document.getElementById('label-30');
+    let parrafo = document.createElement('p');
+ 
+    app.appendChild(parrafo);
+    
+    button.addEventListener('click', () => {
+        let vocal = input.value;                        
+        if (vocal.length > 1 || !isNaN(vocal)) {
+            alert('Solo se puede una letra.');
+        } else {            
+            resultado = esVocal(vocal);
+            input.value = ''
+            parrafo.innerText = `${resultado ? 'Es una vocal' : 'No es una vocal'}`;          
+        }       
+    });
+}
 
 const selector = () => {
     const value = parseInt(document.getElementById('selector').value);    
@@ -932,7 +1106,27 @@ const selector = () => {
         case 25:
             eVeinticinco();
             enunciado = 'Definí una función convertirHorasEnSegundos que reciba como argumento un número de horas y devuelva la conversión a segundos de dicha cantidad de horas'; 
-            break;                                                                       
+            break;
+        case 26:
+            eVeintiseis();            
+            enunciado = 'Definí una función generarEmail que reciba como argumentos dos string usuario y dominio y el un string email con el formato usuario@dominio.com'; 
+            break;
+        case 27:
+            eVeintisiete();            
+            enunciado = 'Necesitamos un programa que pida ingresar una cantidad de grados Celsius, mediante el siguiente mensaje:<br>● Ingresá una cantidad de grados Celsius <br>Con esta información, el programa deberá mostrar la conversión de grados Celsius a grados Fahrenheit con el mensaje: La conversión de {grados} grados Celsius a Fahrenheit es: {resultado}';
+            break;
+        case 28:
+            eVeintiocho();            
+            enunciado = 'Necesitamos un programa que pida ingresar la distancia de un recorrido, mediante el mensaje: <br> ● Ingresá la distancia del recorrido <BR>Con esta información, el programa deberá calcular cuánto tiempo tardaría en completar el recorrido en distintos medios de transporte y luego mostrarlo mediante el siguiente mensaje: <br>Para la distancia {distancia} km en bicicleta el tiempo de viaje es {resultadoEnBicicleta} hora/s, a pie resultadoAPie} hora/s y en auto {resultadoEnAuto} hora/s <br>Las velocidades de los medio de transporte son: <br>● a pie : 5 km/ hs <br>● bicicleta : 10 km/ hs <br>● auto : 50 km/hs';
+            break;
+        case 29:
+            eVeintinueve();            
+            enunciado = 'Definí una función puedeVerPelicula que reciba como argumentos un número edad y un booleano tieneAutorizacion, y retorne true si la persona está habilitada para ver la película o false si no. Sólo puede ver la película si: tiene 15 años o más, o tiene autorización de sus padres.<br>datos con los cuales deben ser enviados a la función <br>puedeVerPelicula(12, false)      <br>false <br>puedeVerPelicula(12, true) <br>true <br>puedeVerPelicula(16, false) <br>true <br>puedeVerPelicula(18, true) <br>true';
+            break;
+        case 30:
+            eTreinta();            
+            enunciado = `Definí una función esVocal que tome por parámetro un string letra y nos indique si letra es una vocal. <br>datos con los cuales deben ser enviados a la función: <br>esVocal('a') <br> true <br>esVocal('n') <br>false <br>esVocal('e') <br>true`;
+            break;                                                                              
         default:
             enunciado = 'No existe el ejercicio con ese número:';
             break;
