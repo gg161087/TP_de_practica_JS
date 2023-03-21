@@ -986,15 +986,15 @@ const eTreinta = () => {
     
     let button = document.getElementById('btn-30');
     let input = document.getElementById('input-30');
-    let label = document.getElementById('label-30');
     let parrafo = document.createElement('p');
  
     app.appendChild(parrafo);
     
     button.addEventListener('click', () => {
         let vocal = input.value;                        
-        if (vocal.length > 1 || !isNaN(vocal)) {
-            alert('Solo se puede una letra.');
+        if (vocal.length > 1 || !isNaN(vocal)) { 
+            input.value = '';           
+            alert('Solo se puede una letra.');            
         } else {            
             resultado = esVocal(vocal);
             input.value = ''
